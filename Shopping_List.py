@@ -7,23 +7,36 @@
 # Here comes your imports
 
 # Here comes your (few) global variables
-
+myTup  = ()
+myList = []
 # Here comes your function definitions
 
 def main():
     print("Welcome To Shopping List!")
-    numItems = input("How many do you want?")
-    myTup  = ()
-    myList = []
+    EnterIngredients()
+    SortIngredients()
+    OutpIngredients()
 
-    for x in range(int(numItems)):
-        itemName  = input("Enter item name: ")
-        itemPrice = input("Enter item price:")
-        myTup     = (itemPrice, itemName)
-        myList.append(myTup)
 
+
+def EnterIngredients():
+        numItems = input("How many do you want?")
+        for x in range(int(numItems)):
+            itemName  = input("Enter item name: ")
+            itemPrice = input("Enter item price:")
+            myTup     = (itemPrice, itemName)
+            myList.append(myTup)
+
+
+def SortIngredients():
     myList.sort()
+
+
+def OutpIngredients():
     print(myList)
+
+
+
 
 if __name__ == "__main__":
         main()
