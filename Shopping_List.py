@@ -9,6 +9,7 @@
 # Here comes your (few) global variables
 myTup  = ()
 myList = []
+
 # Here comes your function definitions
 
 def main():
@@ -20,15 +21,25 @@ def main():
 
 
 def EnterIngredients():
-        numItems = input("How many do you want?")
-        for x in range(int(numItems)):
-            itemName  = input("Enter item name: ")
-            itemPrice = input("Enter item price:")
-            myTup     = (itemPrice, itemName)
-            myList.append(myTup)
+    numItems  = 0
+    EndofList = "Yes"
+    while (EndofList != "No"):
+        itemName     = input("Enter item name: ")
+        itemCategory = input("Enter item Category: ")
+        itemQuantity = input("Enter item Quantity: ")
+        EndofList    = input("Do you want to add another item?:")
+        myTup        = (itemName, itemCategory, itemQuantity)
+        myList.append(myTup)
+        numItems += 1
 
 
 def SortIngredients():
+    #numItems = input("How many do you want?")
+    #for x in range(int(numItems)):
+    #    itemName  = input("Enter item name: ")
+    #    itemPrice = input("Enter item price:")
+    #    myTup     = (itemPrice, itemName)
+    #    myList.append(myTup)
     myList.sort()
 
 
