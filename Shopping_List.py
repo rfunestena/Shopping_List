@@ -10,6 +10,7 @@ import csv
 
 # Here comes your (few) global variables
 myList  = []
+myList2  = []
 myShoppingList = []
 myShoppingListFiltered = []
 
@@ -17,9 +18,9 @@ myShoppingListFiltered = []
 
 def main():
     print("Welcome To Shopping List!")
-    Open_csv()
+    rangeList = Open_csv()
     #rangeList    = EnterIngredients()
-    #NewRangeList = SortIngredients(rangeList)
+    NewRangeList = SortIngredients(rangeList)
     #OutpIngredients(NewRangeList)
     #create_json()
     create_csv()
@@ -52,7 +53,6 @@ def SortIngredients(rangeList):
             if ((myShoppingList[x][0] == myShoppingList[i][0]) and (i != x)):
                 myShoppingList[x][2] += myShoppingList[i][2]
                 myShoppingList[i][2] = 0
-                #print(myShoppingList[x])
 # Remove cells that are set to zero
 # And asign it to a new list                
     for z in range(int(rangeList)):
@@ -73,16 +73,16 @@ def create_json():
 
 def Open_csv():
     #Read the CSV file in (skpping first row)
-    csvRows = []
+    numItems = 0
     with open('/home/raul/Documents/Raul/Sw_Dev/Shopping_List/Shopping_List.csv') as csvFileObj:
         readerObj = csv.reader(csvFileObj)
-        print("This is the list that is read from file")
         for row in readerObj:
             if readerObj.line_num == 1:
                 continue    #skip first row
-            csvRows.append(row)
-            print(row)
-            
+            myList2 = [row[0],row[1],int(row[2])]
+            myShoppingList.append(myList2)
+            numItems += 1
+    return numItems
 
 def create_csv():
     with open('/home/raul/Documents/Raul/Sw_Dev/Shopping_List/Shopping_List.csv','w', newline='') as csvFile:
