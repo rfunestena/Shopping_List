@@ -6,6 +6,8 @@
 
 # Here comes your imports
 import json
+import csv
+
 # Here comes your (few) global variables
 myList  = []
 myShoppingList = []
@@ -15,10 +17,12 @@ myShoppingListFiltered = []
 
 def main():
     print("Welcome To Shopping List!")
-    rangeList    = EnterIngredients()
-    NewRangeList = SortIngredients(rangeList)
-    OutpIngredients(NewRangeList)
-    create_json()
+    Open_csv()
+    #rangeList    = EnterIngredients()
+    #NewRangeList = SortIngredients(rangeList)
+    #OutpIngredients(NewRangeList)
+    #create_json()
+    create_csv()
 
 
 
@@ -66,6 +70,25 @@ def OutpIngredients(NewRangeList):
 def create_json():
     with open('/home/raul/Documents/Raul/Sw_Dev/Shopping_List/Shopping_List.txt','w') as file:
         json.dump(myShoppingListFiltered, file)
+
+def Open_csv():
+    #Read the CSV file in (skpping first row)
+    csvRows = []
+    with open('/home/raul/Documents/Raul/Sw_Dev/Shopping_List/Shopping_List.csv') as csvFileObj:
+        readerObj = csv.reader(csvFileObj)
+        print("This is the list that is read from file")
+        for row in readerObj:
+            if readerObj.line_num == 1:
+                continue    #skip first row
+            csvRows.append(row)
+            print(row)
+            
+
+def create_csv():
+    with open('/home/raul/Documents/Raul/Sw_Dev/Shopping_List/Shopping_List.csv','w', newline='') as csvFile:
+        write = csv.writer(csvFile)
+        write.writerow(['Name','Category','Quantity'])
+        write.writerows(myShoppingListFiltered)
 
 if __name__ == "__main__":
         main()

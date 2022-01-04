@@ -1,1 +1,1 @@
-[["Carrots", "Veg", 3], ["Potatoes", "Veg", 4], ["Chicken", "Meat", 5]]
+[["Chicken", "Meat", 2], ["Potatoes", "Veg", 5]]
