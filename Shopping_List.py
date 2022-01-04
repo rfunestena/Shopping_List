@@ -91,4 +91,4 @@ def create_csv():
         write.writerows(myShoppingListFiltered)
 
 if __name__ == "__main__":
-        main()
+        main() #just a dummy comment
