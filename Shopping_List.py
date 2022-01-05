@@ -59,6 +59,7 @@ def SortIngredients(rangeList):
         if (myShoppingList[z][2] != 0):
             myShoppingListFiltered.append(myShoppingList[z])
             numItemsFinalList += 1
+    myShoppingListFiltered.sort(key = lambda x: x[1])
     return numItemsFinalList
         
 
@@ -90,5 +91,6 @@ def create_csv():
         write.writerow(['Name','Category','Quantity'])
         write.writerows(myShoppingListFiltered)
 
+
 if __name__ == "__main__":
-        main() #just a dummy comment
+        main() #Dummy comment reomoved.
