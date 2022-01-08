@@ -5,12 +5,10 @@
 # output the sorted data showing the item and the price.
 
 # Here comes your imports
-import json
-import csv
+import json, csv, os, sys
 
 # Here comes your (few) global variables
 myList  = []
-myList2  = []
 myShoppingList = []
 myShoppingListFiltered = []
 
@@ -29,6 +27,7 @@ def main():
 
 def EnterIngredients():
     #Initialize variables
+    KeyboardList = []
     numItems     = 0
     EndofList    = "Yes"
     while (EndofList != "no"):
@@ -36,8 +35,8 @@ def EnterIngredients():
         itemCategory = input("Enter item Category: ")
         itemQuantity = int(input("Enter item Quantity: "))
         EndofList    = input("Do you want to add another item?:")
-        myList       = [itemName, itemCategory, itemQuantity]
-        myShoppingList.append(myList)
+        KeyboardList = [itemName, itemCategory, itemQuantity]
+        myShoppingList.append(KeyboardList)
         numItems += 1
     return numItems
 
@@ -73,24 +72,25 @@ def create_json():
         json.dump(myShoppingListFiltered, file)
 
 def Open_csv():
-    #Read the CSV file in (skpping first row)
+    #Read the CSV file in (skipping first row)
+    CsvList  = []
     numItems = 0
-    with open('/home/raul/Documents/Raul/Sw_Dev/Shopping_List/Shopping_List.csv') as csvFileObj:
+    with open(os.path.join(sys.path[0], "Shopping_List.csv"), "r") as csvFileObj:
         readerObj = csv.reader(csvFileObj)
         for row in readerObj:
             if readerObj.line_num == 1:
                 continue    #skip first row
-            myList2 = [row[0],row[1],int(row[2])]
-            myShoppingList.append(myList2)
+            CsvList = [row[0],row[1],int(row[2])]
+            myShoppingList.append(CsvList)
             numItems += 1
     return numItems
 
 def create_csv():
-    with open('/home/raul/Documents/Raul/Sw_Dev/Shopping_List/Shopping_List.csv','w', newline='') as csvFile:
+    with open(os.path.join(sys.path[0], "Shopping_List.csv"),"w", newline='') as csvFile:
         write = csv.writer(csvFile)
         write.writerow(['Name','Category','Quantity'])
         write.writerows(myShoppingListFiltered)
 
 
 if __name__ == "__main__":
-        main() #Dummy comment reomoved.
+        main()
