@@ -16,14 +16,11 @@ myShoppingListFiltered = []
 
 def main():
     print("Welcome To Shopping List!")
-    rangeList = Open_csv()
-    #rangeList    = EnterIngredients()
+    print("Shopping list is being created...")
+    rangeList = Open_RecipeList()
     NewRangeList = SortIngredients(rangeList)
-    #OutpIngredients(NewRangeList)
-    #create_json()
     create_csv()
-
-
+    print("Shopping List is ready!!")
 
 def EnterIngredients():
     #Initialize variables
@@ -40,11 +37,10 @@ def EnterIngredients():
         numItems += 1
     return numItems
 
-
 def SortIngredients(rangeList):
-# Look through the list and add same items
-# that user has introduced at different recipes
-# set to zero one of the items once it has been added.
+    # Look through the list and add same items
+    # that user has introduced at different recipes
+    # set to zero one of the items once it has been added.
     #Initialize variables
     numItemsFinalList = 0
     for x in range(int(rangeList)):
@@ -52,8 +48,8 @@ def SortIngredients(rangeList):
             if ((myShoppingList[x][0] == myShoppingList[i][0]) and (i != x)):
                 myShoppingList[x][2] += myShoppingList[i][2]
                 myShoppingList[i][2] = 0
-# Remove cells that are set to zero
-# And asign it to a new list                
+    # Remove cells that are set to zero
+    # And asign it to a new list                
     for z in range(int(rangeList)):
         if (myShoppingList[z][2] != 0):
             myShoppingListFiltered.append(myShoppingList[z])
@@ -61,7 +57,6 @@ def SortIngredients(rangeList):
     myShoppingListFiltered.sort(key = lambda x: x[1])
     return numItemsFinalList
         
-
 def OutpIngredients(NewRangeList):
     print("Name, Category, Quantity")
     for x in range(int(NewRangeList)): 
@@ -71,7 +66,7 @@ def create_json():
     with open('/home/raul/Documents/Raul/Sw_Dev/Shopping_List/Shopping_List.txt','w') as file:
         json.dump(myShoppingListFiltered, file)
 
-def Open_csv():
+def Open_RecipeList():
     #Read the CSV file in (skipping first row)
     CsvList  = []
     numItems = 0
@@ -80,7 +75,7 @@ def Open_csv():
         for row in readerObj:
             if readerObj.line_num == 1:
                 continue    #skip first row
-            CsvList = [row[0],row[1],int(row[2])]
+            CsvList = [row[0],row[1],float(row[2])]
             myShoppingList.append(CsvList)
             numItems += 1
     return numItems
@@ -90,7 +85,6 @@ def create_csv():
         write = csv.writer(csvFile)
         write.writerow(['Name','Category','Quantity'])
         write.writerows(myShoppingListFiltered)
-
 
 if __name__ == "__main__":
         main()
