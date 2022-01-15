@@ -80,6 +80,20 @@ def Open_RecipeList():
             numItems += 1
     return numItems
 
+def Open_csv():
+    #Read the CSV file in (skipping first row)
+    CsvList  = []
+    numItems = 0
+    with open(os.path.join(sys.path[0], "Shopping_List.csv"), "r") as csvFileObj:
+        readerObj = csv.reader(csvFileObj)
+        for row in readerObj:
+            if readerObj.line_num == 1:
+                continue    #skip first row
+            CsvList = [row[0],row[1],int(row[2])]
+            myShoppingList.append(CsvList)
+            numItems += 1
+    return numItems
+
 def create_csv():
     with open(os.path.join(sys.path[0], "Shopping_List.csv"),"w", newline='') as csvFile:
         write = csv.writer(csvFile)
