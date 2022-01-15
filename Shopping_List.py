@@ -5,7 +5,7 @@
 # output the sorted data showing the item and the price.
 
 # Here comes your imports
-import json, csv, os, sys
+import json, csv, os, sys, pandas
 
 # Here comes your (few) global variables
 myList  = []
@@ -17,9 +17,10 @@ myShoppingListFiltered = []
 def main():
     print("Welcome To Shopping List!")
     print("Shopping list is being created...")
-    rangeList = Open_RecipeList()
-    NewRangeList = SortIngredients(rangeList)
-    create_csv()
+    Open_RecipeList()
+    #rangeList = Open_RecipeList()
+    #NewRangeList = SortIngredients(rangeList)
+    #create_csv()
     print("Shopping List is ready!!")
 
 def EnterIngredients():
@@ -67,18 +68,13 @@ def create_json():
         json.dump(myShoppingListFiltered, file)
 
 def Open_RecipeList():
-    #Read the CSV file in (skipping first row)
-    CsvList  = []
-    numItems = 0
-    with open(os.path.join(sys.path[0], "Shopping_List.csv"), "r") as csvFileObj:
-        readerObj = csv.reader(csvFileObj)
-        for row in readerObj:
-            if readerObj.line_num == 1:
-                continue    #skip first row
-            CsvList = [row[0],row[1],float(row[2])]
-            myShoppingList.append(CsvList)
-            numItems += 1
-    return numItems
+    df = pandas.read_excel('Recipes_Database.xlsx',sheet_name='Control_sheet')
+    dfSubset = df[df["Selected?"] == "x"]
+    RecipeSelected = dfSubset.get_values()[0][0]
+    #RecipeSelected = dfSubset['Recipe Name']
+    print(RecipeSelected)
+    df3 = pandas.read_excel('Recipes_Database.xlsx',sheet_name=RecipeSelected)
+    print(df3)
 
 def Open_csv():
     #Read the CSV file in (skipping first row)
