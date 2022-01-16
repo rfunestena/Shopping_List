@@ -8,19 +8,20 @@
 import json, csv, os, sys, pandas
 
 # Here comes your (few) global variables
-myList  = []
-myShoppingList = []
-myShoppingListFiltered = []
+myList                  = []
+myRecipeList            = []
+myShoppingList          = []
+myShoppingListFiltered  = []
 
 # Here comes your function definitions
 
 def main():
     print("Welcome To Shopping List!")
     print("Shopping list is being created...")
-    Open_RecipeList()
+    rangeList = Open_RecipeList()
     #rangeList = Open_RecipeList()
-    #NewRangeList = SortIngredients(rangeList)
-    #create_csv()
+    NewRangeList = SortIngredients(rangeList)
+    create_csv()
     print("Shopping List is ready!!")
 
 def EnterIngredients():
@@ -46,14 +47,14 @@ def SortIngredients(rangeList):
     numItemsFinalList = 0
     for x in range(int(rangeList)):
         for i in range(int(rangeList)):
-            if ((myShoppingList[x][0] == myShoppingList[i][0]) and (i != x)):
-                myShoppingList[x][2] += myShoppingList[i][2]
-                myShoppingList[i][2] = 0
+            if ((myRecipeList[x][0] == myRecipeList[i][0]) and (i != x)):
+                myRecipeList[x][2] += myRecipeList[i][2]
+                myRecipeList[i][2] = 0
     # Remove cells that are set to zero
     # And asign it to a new list                
     for z in range(int(rangeList)):
-        if (myShoppingList[z][2] != 0):
-            myShoppingListFiltered.append(myShoppingList[z])
+        if (myRecipeList[z][2] != 0):
+            myShoppingListFiltered.append(myRecipeList[z])
             numItemsFinalList += 1
     myShoppingListFiltered.sort(key = lambda x: x[1])
     return numItemsFinalList
@@ -68,13 +69,23 @@ def create_json():
         json.dump(myShoppingListFiltered, file)
 
 def Open_RecipeList():
+    ListHelper = []
     df = pandas.read_excel('Recipes_Database.xlsx',sheet_name='Control_sheet')
     dfSubset = df[df["Selected?"] == "x"]
-    RecipeSelected = dfSubset.get_values()[0][0]
-    #RecipeSelected = dfSubset['Recipe Name']
-    print(RecipeSelected)
-    df3 = pandas.read_excel('Recipes_Database.xlsx',sheet_name=RecipeSelected)
-    print(df3)
+    number_of_rows = len(dfSubset.index)
+    #print(number_of_rows)
+    for index in range(number_of_rows):
+        RecipeSelected = dfSubset.values[index][0]
+        #RecipeSelected = dfSubset['Recipe Name']
+        #print(RecipeSelected)
+        df3 = pandas.read_excel('Recipes_Database.xlsx',sheet_name=RecipeSelected)
+        number_of_rows_recipe = len(df3.index)
+        for items in range(number_of_rows_recipe):
+            ListHelper = [df3.values[items][0],df3.values[items][1],df3.values[items][2]]
+            #print(ListHelper)
+            myRecipeList.append(ListHelper)
+    #print(len(myRecipeList))
+    return len(myRecipeList)
 
 def Open_csv():
     #Read the CSV file in (skipping first row)
