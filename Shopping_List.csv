@@ -1,6 +1,5 @@
 Name,Category,Quantity
 Chorizo,Cured Meat,0.5
-Salmon fillets,Fish,2
 Frozen peas,Freezer,140
 Low-Fat crème fraiche,Fridge,1
 Chives,Herbs,1
@@ -8,6 +7,7 @@ Pesto,Pasta,2.0
 Wholemeal Pasta,Pasta,250.0
 Wholewheat Pasta,Pasta,240
 Vegetable stock cube,Spices,1
+Red Onion,Veg,-1
 Red Pepper,Veg,2.0
 Onion,Veg,1.0
 Garlic,Veg,2.0

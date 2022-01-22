@@ -70,21 +70,23 @@ def create_json():
 
 def Open_RecipeList():
     ListHelper = []
+    #Read Control sheet to determine which meals are selected.
     df = pandas.read_excel('Recipes_Database.xlsx',sheet_name='Control_sheet')
     dfSubset = df[df["Selected?"] == "x"]
     number_of_rows = len(dfSubset.index)
-    #print(number_of_rows)
     for index in range(number_of_rows):
         RecipeSelected = dfSubset.values[index][0]
-        #RecipeSelected = dfSubset['Recipe Name']
-        #print(RecipeSelected)
         df3 = pandas.read_excel('Recipes_Database.xlsx',sheet_name=RecipeSelected)
         number_of_rows_recipe = len(df3.index)
-        for items in range(number_of_rows_recipe):
-            ListHelper = [df3.values[items][0],df3.values[items][1],df3.values[items][2]]
-            #print(ListHelper)
-            myRecipeList.append(ListHelper)
-    #print(len(myRecipeList))
+        if RecipeSelected == 'House_Stock':
+            #For this sheet, we need the numbers to be negative, since they are in the house.
+            for items in range(number_of_rows_recipe):
+                ListHelper = [df3.values[items][0],df3.values[items][1],-df3.values[items][2]] #[Name , Category, -(Quantity)] 
+                myRecipeList.append(ListHelper)
+        else:
+            for items in range(number_of_rows_recipe):
+                ListHelper = [df3.values[items][0],df3.values[items][1],df3.values[items][2]] #[Name , Category, Quantity]
+                myRecipeList.append(ListHelper)
     return len(myRecipeList)
 
 def Open_csv():
